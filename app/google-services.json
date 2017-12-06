@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1092716794246-m280ik7g63j4f4nn8a7hrkdl0nk65m5c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.techtown.firebasetermproject",
+            "certificate_hash": "0dade0f2f9a2a26f44d2a2e33f1b5ef00b2e9aa9"
+          }
+        },
+        {
           "client_id": "1092716794246-76lbnvp0klbov43fco3lbrpd9uv4jl80.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
