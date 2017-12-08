@@ -110,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
                     .setAction("Action", null).show();
             Intent ii = getIntent();
             String userID = ii.getStringExtra("USERID");
+            Log.d("박정환", userID);
             Intent i = new Intent(getApplicationContext(), WriteActivity.class);
             i.putExtra("USERID",userID);
             startActivity(i);
@@ -229,7 +230,26 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         return 3;
     }
 }
+    @Override
+    protected void onNewIntent(Intent intent) {
+        Log.d("박정환","onNewIntent() called");
+        if (intent != null) {
+            processIntent(intent);
+        }
 
+        super.onNewIntent(intent);
+    }
+
+
+    private void processIntent(Intent intent) {
+        String from = intent.getStringExtra("from");
+        if (from == null) {
+            Log.d("박정환", "from is null");
+
+            return;
+        }
+        String contents = intent.getStringExtra("contents");
+    }
 
 
 }
