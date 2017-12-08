@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,20 +19,26 @@ import com.prolificinteractive.materialcalendarview.DayViewFacade;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.prolificinteractive.materialcalendarview.spans.DotSpan;
+import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
 import android.graphics.Color;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.techtown.firebasetermproject.BusProvider;
 import org.techtown.firebasetermproject.DetailActivity;
+import org.techtown.firebasetermproject.PushEvent;
 import org.techtown.firebasetermproject.R;
+import org.techtown.firebasetermproject.calender.EventDecorator;
 import org.techtown.firebasetermproject.calender.OnDayDecorator;
 import org.techtown.firebasetermproject.calender.SaturdayDecorator;
 import org.techtown.firebasetermproject.calender.SundayDecorator;
@@ -40,7 +48,7 @@ public class ThirdFragment extends Fragment {
     public static final String ARG_PAGE = "ARG_PAGE";
     private int mPage;
     private long btnPressTime = 0;
-
+    public MaterialCalendarView calendar;
     View view = null;
     Vector vec;
     int firstDay;
@@ -48,9 +56,12 @@ public class ThirdFragment extends Fragment {
     int iYear;
     int iMonth;
     int doubleCount = 0;
-    Calendar calendar;
+    String tag;
     TextView selectDate;
     TextView selectDated;
+    FrameLayout detail_frag;
+
+    static public CalendarDay aa;
 
     Collection<CalendarDay> dates;
 
@@ -71,6 +82,7 @@ public class ThirdFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mPage = getArguments().getInt(ARG_PAGE);
 
+        BusProvider.getInstance().register(this);
     }
 
 
@@ -79,13 +91,12 @@ public class ThirdFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-
         if (mPage == 2) {
             view = inflater.inflate(R.layout.fragment_third, container, false);//fragment_page
         }
 
 
-        final MaterialCalendarView calendar = (MaterialCalendarView)view.findViewById(R.id.calendarView);
+        calendar = (MaterialCalendarView)view.findViewById(R.id.calendarView);
 
         dates = new Collection<CalendarDay>() {
             @Override
@@ -170,9 +181,7 @@ public class ThirdFragment extends Fragment {
 
         calendar.setSelectionColor(Color.RED);
 
-
         final CalendarDay specialDay = CalendarDay.from(2017, 11, 25); // -1필요
-
 
         calendar.addDecorator(new EventDecorator(Color.BLUE, specialDay));
 
@@ -187,57 +196,99 @@ public class ThirdFragment extends Fragment {
         String newDate = s1 + s2+ s3;
 
 
-        selectDate = (TextView)view.findViewById(R.id.dated);
-        selectDated = (TextView)view.findViewById(R.id.datedd);
-        selectDate.setText(newDate);
+        //selectDate = (TextView)view.findViewById(R.id.dated);
+        //selectDated = (TextView)view.findViewById(R.id.datedd);
+        //selectDate.setText(newDate);
 
 
         calendar.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-
+                CalendarDay firstDate = date;
                 Context context = getActivity();
 
+                Log.d("d", "zzzzzzz");
 
-                selectDate.setText(specialDay.toString());
-                selectDated.setText(date.toString());
 
-                if(date.toString().equals(specialDay.toString())){
-                    doubleCount++;
-                    //Toast.makeText(context, "christMas!", Toast.LENGTH_SHORT).show();
-                    if (System.currentTimeMillis() > btnPressTime + 700) {
-                        btnPressTime = System.currentTimeMillis();
-                        Toast.makeText(context, "한번 더 터치하면 실행됩니다.",
-                                Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    if (System.currentTimeMillis() <= btnPressTime + 1000) {
-                        Intent detail = new Intent(context, DetailActivity.class);
-                        detail.putExtra("date", specialDay.toString());
-                        startActivity(detail);
-                    }
+                //selectDate.setText(specialDay.toString());
+                //selectDated.setText(date.toString());
+
+                if (System.currentTimeMillis() > btnPressTime + 300) {
+                    btnPressTime = System.currentTimeMillis();
+                    Toast.makeText(context, "한번 더 터치하면 실행됩니다.",
+                            Toast.LENGTH_SHORT).show();
+                    firstDate = date;
+                    return;
                 }
-                else{
+                if (System.currentTimeMillis() <= btnPressTime + 1000) {
+                    if(date.toString().equals(specialDay.toString())){
+//                        Intent detail = new Intent(context, DetailActivity.class);
+//                        detail.putExtra("date", specialDay.toString());
+//                        detail.putExtra("tag", ThirdFragment.this.getTag());
+//                        startActivity(detail);
 
-                    if (System.currentTimeMillis() > btnPressTime + 700) {
-                        btnPressTime = System.currentTimeMillis();
-                        Toast.makeText(context, "한번 더 터치하면 실행됩니다.",
-                                Toast.LENGTH_SHORT).show();
-                        return;
+                        DetailFragment df = new DetailFragment();
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+// Replace whatever is in the fragment_container view with this fragment,
+// and add the transaction to the back stack
+                        transaction.add(R.id.detail_view, df);
+                        transaction.addToBackStack(null);
+
+// Commit the transaction
+                        transaction.commit();
                     }
-                    if (System.currentTimeMillis() <= btnPressTime + 1000) {
+                    else if(firstDate.toString().equals(date.toString())){
                         Intent detail = new Intent(context, DetailActivity.class);
                         detail.putExtra("date", date.toString());
+                        detail.putExtra("tag", tag);
                         startActivity(detail);
+
+//                        DetailFragment df = new DetailFragment();
+//
+//                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                        transaction.add(R.id.detail_view, df);
+//                        transaction.addToBackStack(null);
+//                        transaction.commit();
                     }
+                    aa= date;
 
                 }
-
 
             }
         });
 
         return view;
+
+    }
+
+    @Subscribe
+    public void FinishLoad(PushEvent mPushEvent) {
+
+        CalendarDay day = mPushEvent.getList();
+        boolean OnOff = mPushEvent.getOnoff();
+
+        //selectDated.setText(day.toString());
+
+        if(OnOff) {
+            calendar.addDecorator(new EventDecorator(Color.RED, day));
+        }
+        else{
+            calendar.removeDecorator(new DayViewDecorator() {
+                @Override
+                public boolean shouldDecorate(CalendarDay day) {
+                    return false;
+                }
+
+                @Override
+                public void decorate(DayViewFacade view) {
+                    view.addSpan(new DotSpan(0,0));
+                }
+
+            });
+        }
+
+        calendar.invalidateDecorators();
 
     }
 
@@ -259,26 +310,7 @@ public class ThirdFragment extends Fragment {
         return dates;
     }
 
-    public class EventDecorator implements DayViewDecorator {
 
-        private final int color;
-        private final CalendarDay day;
-
-        public EventDecorator(int color, CalendarDay day) {
-            this.color = color;
-            this.day = day;
-        }
-
-        @Override
-        public boolean shouldDecorate(CalendarDay day) {
-            return (this.day.equals(day));
-        }
-
-        @Override
-        public void decorate(DayViewFacade view) {
-            view.addSpan(new DotSpan(8, color));
-        }
-    }
 
 
 
@@ -290,7 +322,6 @@ public class ThirdFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
     }
-
 
 
 

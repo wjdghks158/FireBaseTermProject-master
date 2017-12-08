@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 
 public class BroadcastD extends BroadcastReceiver {
@@ -18,11 +19,13 @@ public class BroadcastD extends BroadcastReceiver {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
         Notification.Builder builder = new Notification.Builder(context);
         builder.setSmallIcon(R.drawable.ic_notifications_active_black_24dp).setTicker("HETT").setWhen(System.currentTimeMillis())
-                .setNumber(1).setContentTitle("푸쉬 제목").setContentText("푸쉬내용")
+                .setNumber(1).setContentTitle("D-Day 푸시!!").setContentText("내용")
                 .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE).setContentIntent(pendingIntent).setAutoCancel(true);
-        //setSmallIcon(R.drawable.on) 아직
+
 
         notificationmanager.notify(1, builder.build());
+        Toast.makeText(context, "푸시푸시!",
+                Toast.LENGTH_SHORT).show();
     }
 
 }

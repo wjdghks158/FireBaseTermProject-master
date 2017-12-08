@@ -13,7 +13,7 @@ public class AlarmHATT {
     public AlarmHATT(Context context) {
         this.context=context;
     }
-    public void Alarm() {
+    public void Alarm(int Hours, int Min) {
         AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, BroadcastD.class);
 
@@ -22,7 +22,7 @@ public class AlarmHATT {
         Calendar calendar = Calendar.getInstance();
         //알람시간 calendar에 set해주기
 
-        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), 19, 25, 0);
+        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), Hours, Min, 0);
 
         Log.d("f", calendar.toString());
         //알람 예약
