@@ -3,14 +3,12 @@ package org.techtown.firebasetermproject;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -33,8 +31,7 @@ import org.techtown.firebasetermproject.fragment.ThirdFragment;
 public class MainActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
+    public static String userID;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -47,24 +44,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     //actionBar.setDisplayShowTitleEnabled(false);
-    //actionBar.setDisplayShowHomeEnabled(false)
+    //actionBar.setDisplayShowHomeEnabled(false);
 
+      //  new AlarmHATT(getApplicationContext()).Alarm();
 
-        mAuth = FirebaseAuth.getInstance();
-
-        mAuthListener = new FirebaseAuth.AuthStateListener() { // 인증 상태 리스너
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    Log.d("PH", "onAuthStateChanged:signed_in:" + user.getUid());
-                } else {
-                    Log.d("PH", "onAuthStateChanged:signed_out");
-                }
-            }
-        };
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
         // Name, email address, and profile photo Url
         String name = user.getDisplayName();
@@ -109,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
             Intent ii = getIntent();
-            String userID = ii.getStringExtra("USERID");
+             userID = ii.getStringExtra("USERID");
             Log.d("박정환", userID);
             Intent i = new Intent(getApplicationContext(), WriteActivity.class);
             i.putExtra("USERID",userID);
@@ -143,18 +127,6 @@ public class MainActivity extends AppCompatActivity {
         }
         Log.d("박정환","onOptionsItemSelected 끝");
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onStart(){
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
-    }
-
-    @Override
-    public void onDestroy(){
-
-        super.onDestroy();
     }
 
 /**
