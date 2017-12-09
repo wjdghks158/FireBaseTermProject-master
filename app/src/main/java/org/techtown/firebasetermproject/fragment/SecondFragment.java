@@ -96,7 +96,7 @@ public class SecondFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mPage = getArguments().getInt(ARG_PAGE);
        Log.d("박정환","두번째 프레그먼트 oncreate");
-        Log.d("박정환",  MainActivity.userID);
+        //Log.d("박정환",  MainActivity.userID);
         database = FirebaseDatabase.getInstance();
         database.getReference().child("task").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

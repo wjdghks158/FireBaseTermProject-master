@@ -5,13 +5,12 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * Created by 408 on 2017-12-06.
- */
-public final class CalendarDay implements Parcelable {
+@SuppressWarnings("serial")
+public final class CalendarDay implements Parcelable, Serializable {
 
     /**
      * Get a new instance set to today

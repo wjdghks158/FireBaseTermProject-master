@@ -3,7 +3,10 @@ package org.techtown.firebasetermproject.fragment;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -25,11 +28,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Set;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import android.graphics.Color;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,29 +48,41 @@ import org.techtown.firebasetermproject.DetailActivity;
 import org.techtown.firebasetermproject.PushEvent;
 import org.techtown.firebasetermproject.R;
 import org.techtown.firebasetermproject.calender.EventDecorator;
+import org.techtown.firebasetermproject.calender.MyDBCalendar;
 import org.techtown.firebasetermproject.calender.OnDayDecorator;
 import org.techtown.firebasetermproject.calender.SaturdayDecorator;
 import org.techtown.firebasetermproject.calender.SundayDecorator;
 
+import static android.graphics.Canvas.EdgeType.AA;
+import static com.android.volley.VolleyLog.TAG;
+
 @SuppressLint("ValidFragment")
 public class ThirdFragment extends Fragment {
     public static final String ARG_PAGE = "ARG_PAGE";
+    private static final String APP_SAVE_NAME = "saveCalendar";
     private int mPage;
     private long btnPressTime = 0;
     public MaterialCalendarView calendar;
+    public  static Set<String> set = new HashSet<String>();
     View view = null;
     Vector vec;
     int firstDay;
     int totDays;
     int iYear;
     int iMonth;
-    int doubleCount = 0;
-    String tag;
     TextView selectDate;
     TextView selectDated;
-    FrameLayout detail_frag;
+    TextView listCalendar;
+    Button setCalender;
+    public static CalendarDay dayday;
 
-    static public CalendarDay aa;
+    final static String TAG="SQLITEDBTEST";
+    private MyDBCalendar helper;
+
+    List<CalendarDay> listDay;
+    static ArrayList<String> saveDay;
+    static ArrayList<Integer> saveColor;
+
 
     Collection<CalendarDay> dates;
 
@@ -75,6 +96,7 @@ public class ThirdFragment extends Fragment {
 
 
 
+
     }
 
     @Override
@@ -83,6 +105,14 @@ public class ThirdFragment extends Fragment {
         mPage = getArguments().getInt(ARG_PAGE);
 
         BusProvider.getInstance().register(this);
+        //
+        // saveDay = new ArrayList<>();
+
+//        FragmentTransaction ft = getFragmentManager().beginTransaction();
+//        ft.detach(this).attach(this).commit();
+
+
+
     }
 
 
@@ -93,80 +123,20 @@ public class ThirdFragment extends Fragment {
 
         if (mPage == 2) {
             view = inflater.inflate(R.layout.fragment_third, container, false);//fragment_page
+
+
+            saveDay = new ArrayList<>();
+            saveColor = new ArrayList<>();
+            helper = new MyDBCalendar(getContext());
+
         }
 
 
         calendar = (MaterialCalendarView)view.findViewById(R.id.calendarView);
+        setCalender = (Button)view.findViewById(R.id.load_calendar);
+        listCalendar = (TextView)view.findViewById(R.id.calendarList);
 
-        dates = new Collection<CalendarDay>() {
-            @Override
-            public int size() {
-                return 0;
-            }
 
-            @Override
-            public boolean isEmpty() {
-                return false;
-            }
-
-            @Override
-            public boolean contains(Object o) {
-                return false;
-            }
-
-            @NonNull
-            @Override
-            public Iterator<CalendarDay> iterator() {
-                return null;
-            }
-
-            @NonNull
-            @Override
-            public Object[] toArray() {
-                return new Object[0];
-            }
-
-            @NonNull
-            @Override
-            public <T> T[] toArray(@NonNull T[] a) {
-                return null;
-            }
-
-            @Override
-            public boolean add(CalendarDay calendarDay) {
-                return false;
-            }
-
-            @Override
-            public boolean remove(Object o) {
-                return false;
-            }
-
-            @Override
-            public boolean containsAll(@NonNull Collection<?> c) {
-                return false;
-            }
-
-            @Override
-            public boolean addAll(@NonNull Collection<? extends CalendarDay> c) {
-                return false;
-            }
-
-            @Override
-            public boolean removeAll(@NonNull Collection<?> c) {
-                return false;
-            }
-
-            @Override
-            public boolean retainAll(@NonNull Collection<?> c) {
-                return false;
-            }
-
-            @Override
-            public void clear() {
-
-            }
-        };
 
         calendar.state().edit()
                 .setFirstDayOfWeek(Calendar.SUNDAY)
@@ -183,32 +153,68 @@ public class ThirdFragment extends Fragment {
 
         final CalendarDay specialDay = CalendarDay.from(2017, 11, 25); // -1필요
 
-        calendar.addDecorator(new EventDecorator(Color.BLUE, specialDay));
-
-        int s = specialDay.getYear();
-        int ss =  specialDay.getMonth();
-        int sss = specialDay.getDay();
-
-        String s1 = Integer.toString(s);
-        String s2 = Integer.toString(ss);
-        String s3 = Integer.toString(sss);
-
-        String newDate = s1 + s2+ s3;
 
 
-        //selectDate = (TextView)view.findViewById(R.id.dated);
-        //selectDated = (TextView)view.findViewById(R.id.datedd);
-        //selectDate.setText(newDate);
+        //calendar.addDecorator(new EventDecorator(Color.BLUE, specialDay));
 
+
+        //저장된 달력 등록
+        String sql = "Select * FROM calendar";
+        Cursor cursor = helper.getReadableDatabase().rawQuery(sql,null);
+        StringBuffer buffer = new StringBuffer();
+        String s[];
+        while (cursor.moveToNext()) {
+
+            //buffer.append(cursor.getString(1)+"\t");
+            buffer.append(cursor.getString(0)+",");
+
+            if(!saveDay.contains(cursor.getString(0))) {
+                saveDay.add(cursor.getString(0) + "\t");
+                saveColor.add(cursor.getInt(1));
+
+            }
+
+            if(!saveDay.isEmpty()) {
+                for(int i=0; i<saveDay.size(); i++){
+                    String a = saveDay.get(i);
+                    int color = saveColor.get(i);
+
+                    a = a.replaceAll("[^0-9]", "");
+                    String b = a.substring(0, 4);
+                    String c = a.substring(4, 6);
+                    String d = a.substring(6);
+
+                    int year = Integer.parseInt(b);
+                    int month = Integer.parseInt(c);
+                    int day = Integer.parseInt(d);
+
+                    CalendarDay dday = CalendarDay.from(year, month, day);
+
+                    calendar.addDecorator(new EventDecorator(color, dday));
+
+                    //listCalendar.setText(color);
+                }
+            }
+        }
+
+
+
+
+
+        setCalender.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+            }
+        });
 
         calendar.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
                 CalendarDay firstDate = date;
                 Context context = getActivity();
-
-                Log.d("d", "zzzzzzz");
-
 
                 //selectDate.setText(specialDay.toString());
                 //selectDated.setText(date.toString());
@@ -222,26 +228,18 @@ public class ThirdFragment extends Fragment {
                 }
                 if (System.currentTimeMillis() <= btnPressTime + 1000) {
                     if(date.toString().equals(specialDay.toString())){
-//                        Intent detail = new Intent(context, DetailActivity.class);
-//                        detail.putExtra("date", specialDay.toString());
-//                        detail.putExtra("tag", ThirdFragment.this.getTag());
-//                        startActivity(detail);
 
-                        DetailFragment df = new DetailFragment();
-                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        Intent detail = new Intent(context, DetailActivity.class);
 
-// Replace whatever is in the fragment_container view with this fragment,
-// and add the transaction to the back stack
-                        transaction.add(R.id.detail_view, df);
-                        transaction.addToBackStack(null);
+                        detail.putExtra("date", specialDay.toString());
+                        startActivity(detail);
 
-// Commit the transaction
-                        transaction.commit();
+
+
                     }
                     else if(firstDate.toString().equals(date.toString())){
                         Intent detail = new Intent(context, DetailActivity.class);
                         detail.putExtra("date", date.toString());
-                        detail.putExtra("tag", tag);
                         startActivity(detail);
 
 //                        DetailFragment df = new DetailFragment();
@@ -251,8 +249,7 @@ public class ThirdFragment extends Fragment {
 //                        transaction.addToBackStack(null);
 //                        transaction.commit();
                     }
-                    aa= date;
-
+                    dayday = date;
                 }
 
             }
@@ -267,54 +264,104 @@ public class ThirdFragment extends Fragment {
 
         CalendarDay day = mPushEvent.getList();
         boolean OnOff = mPushEvent.getOnoff();
-
-        //selectDated.setText(day.toString());
-
+        int color = mPushEvent.getColor();
+        Log.d("PH", "color %"+ color);
         if(OnOff) {
-            calendar.addDecorator(new EventDecorator(Color.RED, day));
+
+            calendar.addDecorator(new EventDecorator(color, day));
+
+            try {
+                String sql = String.format (
+                        "INSERT INTO calendar (day, color)\n"+ "VALUES ('%s', '%d')"
+                        ,
+                        day.toString(), color);
+                helper.getWritableDatabase().execSQL(sql);
+
+                Log.d("PH", sql);
+            } catch (android.database.SQLException e) {
+                Log.e(TAG,"Error inserting into DB");
+            }
+
+
+//            saveSharedPreferences_Data(getContext(), "day", saveDay);
+//            count++;
+
         }
         else{
-            calendar.removeDecorator(new DayViewDecorator() {
-                @Override
-                public boolean shouldDecorate(CalendarDay day) {
-                    return false;
-                }
+            color = 0x00FF00000;
+            try {
+                String sql = String.format (
+                        "DELETE FROM calendar "+ "WHERE day = '%s'"
+                        ,
+                        day.toString());
+                helper.getWritableDatabase().execSQL(sql);
+                saveDay.remove(day.toString());
+                Log.d("PH", sql);
+            }catch (android.database.SQLException e){
 
-                @Override
-                public void decorate(DayViewFacade view) {
-                    view.addSpan(new DotSpan(0,0));
-                }
+            }
 
-            });
+
+
+            calendar.addDecorator(new EventDecorator(color, day));
+
         }
 
-        calendar.invalidateDecorators();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(this).attach(this).commitAllowingStateLoss();
+        //calendar.invalidateDecorators();
 
     }
 
-    protected List<CalendarDay> doInBackground(@NonNull Void... voids) {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MONTH, -2);
-        ArrayList<CalendarDay> dates = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
-            CalendarDay day = CalendarDay.from(calendar);
-            dates.add(day);
-            calendar.add(Calendar.DATE, 5);
-        }
+    @Override
+    public void onResume(){
+        super.onResume();
 
-        return dates;
+
+        String sql = "Select * FROM calendar";
+        Cursor cursor = helper.getReadableDatabase().rawQuery(sql,null);
+        StringBuffer buffer = new StringBuffer();
+        String s[];
+        while (cursor.moveToNext()) {
+
+            //buffer.append(cursor.getString(1)+"\t");
+            buffer.append(cursor.getString(0)+",");
+
+            if(!saveDay.contains(cursor.getString(0))) {
+                saveDay.add(cursor.getString(0) + "\t");
+                saveColor.add(cursor.getInt(1));
+
+            }
+
+            if(!saveDay.isEmpty()) {
+                for(int i=0; i<saveDay.size(); i++){
+                    String a = saveDay.get(i);
+                    int color = saveColor.get(i);
+
+                    a = a.replaceAll("[^0-9]", "");
+                    String b = a.substring(0, 4);
+                    String c = a.substring(4, 6);
+                    String d = a.substring(6);
+
+                    int year = Integer.parseInt(b);
+                    int month = Integer.parseInt(c);
+                    int day = Integer.parseInt(d);
+
+                    CalendarDay dday = CalendarDay.from(year, month, day);
+
+                    calendar.addDecorator(new EventDecorator(color, dday));
+
+                    //listCalendar.setText(color);
+                }
+            }
+        }
     }
+    @Override
+    public void onStart(){
+        super.onStart();
 
 
-
-
-
-
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {

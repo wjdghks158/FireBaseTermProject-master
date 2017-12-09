@@ -5,7 +5,7 @@ import com.prolificinteractive.materialcalendarview.spans.DotSpan;
 
 public class EventDecorator implements DayViewDecorator {
 
-    private final int color;
+    private int color;
     private final com.prolificinteractive.materialcalendarview.CalendarDay day;
 
     public EventDecorator(int color, com.prolificinteractive.materialcalendarview.CalendarDay day) {

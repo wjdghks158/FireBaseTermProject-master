@@ -6,8 +6,6 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-
-    
     <uses-permission android:name="android.permission.INTERNET"/>
 
 
@@ -32,6 +30,7 @@
             </intent-filter>
         </activity>
 
+        <receiver android:name=".BroadcastD"></receiver>
         <service
             android:name=".MyFirebaseInstanceIDService"
             android:enabled="true"
@@ -50,7 +49,9 @@
         </service>
 
         <activity android:name=".WriteActivity" />
-        <activity android:name=".DetailActivity"></activity>
+        <activity android:name=".DetailActivity"
+            android:taskAffinity=""        android:excludeFromRecents="true">
+        </activity>
     </application>
 
 </manifest>

@@ -8,11 +8,13 @@ public class PushEvent
     // the pushlist object being sent using the bus
     private com.prolificinteractive.materialcalendarview.CalendarDay pushlist;
     private boolean on;
+    private int color;
 
-    public PushEvent(com.prolificinteractive.materialcalendarview.CalendarDay pushlist, boolean on)
+    public PushEvent(com.prolificinteractive.materialcalendarview.CalendarDay pushlist, boolean on, int color)
     {
         this.pushlist = pushlist;
         this.on = on;
+        this.color = color;
     }
 
     /**
@@ -25,4 +27,5 @@ public class PushEvent
     public Boolean getOnoff(){
         return on;
     }
+    public int getColor() {return color; }
 }
