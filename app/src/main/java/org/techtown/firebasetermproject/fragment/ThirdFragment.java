@@ -63,7 +63,7 @@ public class ThirdFragment extends Fragment {
     private int mPage;
     private long btnPressTime = 0;
     public MaterialCalendarView calendar;
-    public  static Set<String> set = new HashSet<String>();
+
     View view = null;
     Vector vec;
     int firstDay;
@@ -313,49 +313,7 @@ public class ThirdFragment extends Fragment {
 
     }
 
-    @Override
-    public void onResume(){
-        super.onResume();
 
-
-        String sql = "Select * FROM calendar";
-        Cursor cursor = helper.getReadableDatabase().rawQuery(sql,null);
-        StringBuffer buffer = new StringBuffer();
-        String s[];
-        while (cursor.moveToNext()) {
-
-            //buffer.append(cursor.getString(1)+"\t");
-            buffer.append(cursor.getString(0)+",");
-
-            if(!saveDay.contains(cursor.getString(0))) {
-                saveDay.add(cursor.getString(0) + "\t");
-                saveColor.add(cursor.getInt(1));
-
-            }
-
-            if(!saveDay.isEmpty()) {
-                for(int i=0; i<saveDay.size(); i++){
-                    String a = saveDay.get(i);
-                    int color = saveColor.get(i);
-
-                    a = a.replaceAll("[^0-9]", "");
-                    String b = a.substring(0, 4);
-                    String c = a.substring(4, 6);
-                    String d = a.substring(6);
-
-                    int year = Integer.parseInt(b);
-                    int month = Integer.parseInt(c);
-                    int day = Integer.parseInt(d);
-
-                    CalendarDay dday = CalendarDay.from(year, month, day);
-
-                    calendar.addDecorator(new EventDecorator(color, dday));
-
-                    //listCalendar.setText(color);
-                }
-            }
-        }
-    }
     @Override
     public void onStart(){
         super.onStart();

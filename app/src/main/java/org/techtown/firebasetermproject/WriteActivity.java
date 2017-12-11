@@ -3,6 +3,7 @@ package org.techtown.firebasetermproject;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -85,16 +87,16 @@ public class WriteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write);
 
-         time = System.currentTimeMillis();
+        time = System.currentTimeMillis();
 
-         yyyy = new SimpleDateFormat("yyyy");
-         mm = new SimpleDateFormat("MM");
-         dd = new SimpleDateFormat("dd");
+        yyyy = new SimpleDateFormat("yyyy");
+        mm = new SimpleDateFormat("MM");
+        dd = new SimpleDateFormat("dd");
 
 
-         year = yyyy.format(new Date(time));
-         month = mm.format(new Date(time));
-         day = dd.format(new Date(time));
+        year = yyyy.format(new Date(time));
+        month = mm.format(new Date(time));
+        day = dd.format(new Date(time));
 
 
 
@@ -118,34 +120,40 @@ public class WriteActivity extends AppCompatActivity {
         Log.d("박정환", "write7");
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
-items = new String[10];
+        items = new String[10];
         if(user == null) {
             finish();
             return ;
         }
         Log.d("박정환", "write8");
         database2 = FirebaseDatabase.getInstance();
-        database2.getReference().child("class").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("박정환", "write9");
-                classDTOS.clear();
-                int i =0;
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    ClassDTO classDTO = snapshot.getValue(ClassDTO.class);
-                    classDTOS.add(classDTO);
+        Log.d("박정환", "write100");
+        DatabaseReference a = database2.getReference();
+        Log.d("PH", database2.getReference().toString());
 
-                    items[i] = classDTO.subject_class;
-                    subject_class_List.add(classDTO.subject_class);
-                    i++;
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+//        a.child("class").addListenerForSingleValueEvent(new ValueEventListener() {
+//
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                Log.d("박정환", "write9");
+//                classDTOS.clear();
+//                int i =0;
+//                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+//                    ClassDTO classDTO = snapshot.getValue(ClassDTO.class);
+//                    classDTOS.add(classDTO);
+//
+//                    items[i] = classDTO.subject_class;
+//                    subject_class_List.add(classDTO.subject_class);
+//                    i++;
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                throw databaseError.toException();
+//
+//            }
+//        });
 
         Spinner s = (Spinner)findViewById(R.id.spinner1);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
@@ -169,7 +177,9 @@ items = new String[10];
         });
 
 
-       // String key = myRef.push().getKey();
+
+
+        // String key = myRef.push().getKey();
                 /*
                 HashMap<String, Object> postValues =  new HashMap<>();
                 postValues.put("userID", userID);
@@ -201,7 +211,7 @@ items = new String[10];
 
                 myRef.child(key).setValue(postValues);
 
-               // send(subject_class);
+                // send(subject_class);
 
             }
         });
@@ -240,21 +250,21 @@ items = new String[10];
 
             }
         });
-         dialog = new DatePickerDialog(this, listener, Integer.valueOf(year).intValue(), Integer.valueOf(month).intValue()-1
+        dialog = new DatePickerDialog(this, listener, Integer.valueOf(year).intValue(), Integer.valueOf(month).intValue()-1
                 , Integer.valueOf(day).intValue());
-date_tv.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
+        date_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-        dialog.show();
-    }
-});
+                dialog.show();
+            }
+        });
         Log.d("박정환", "write10");
 
 
 
-    }
 
+    }
 
     private DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
         @Override

@@ -28,6 +28,7 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <TimePicker
+        android:layout_gravity="center"
         android:id="@+id/select_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,26 +42,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <RadioGroup
+            android:layout_gravity="center"
             android:id="@+id/select_color"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <RadioButton
                 android:id="@+id/radio1"
-                android:textColor="#FF8080"
-                android:text="red"
+                android:textColor="#0000FF"
+                android:text="D-5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <RadioButton
                 android:id="@+id/radio2"
-                android:textColor="#0000FF"
-                android:text="blue"
+                android:textColor="#FFFF00"
+                android:text="D-3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <RadioButton
+                android:background="#000000"
                 android:id="@+id/radio3"
-                android:textColor="#FFFF00"
-                android:text="yel"
+                android:textColor="#FF8080"
+                android:text="D-1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </RadioGroup>

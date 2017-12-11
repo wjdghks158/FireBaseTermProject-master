@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -42,12 +43,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-    String TAG = "PH";
-    Log.d("박정환","박정환");
+        String TAG = "PH";
+        Log.d("박정환","박정환");
         super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-    //actionBar.setDisplayShowTitleEnabled(false);
-    //actionBar.setDisplayShowHomeEnabled(false)
+        ActionBar actionBar = getSupportActionBar();
+
+        setContentView(R.layout.activity_main);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -66,58 +67,58 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-        // Name, email address, and profile photo Url
-        String name = user.getDisplayName();
-        String email = user.getEmail();
+            // Name, email address, and profile photo Url
+            String name = user.getDisplayName();
+            String email = user.getEmail();
 
-        Uri photoUrl = user.getPhotoUrl();
+            Uri photoUrl = user.getPhotoUrl();
 
-        // Check if user's email is verified
-        boolean emailVerified = user.isEmailVerified();
+            // Check if user's email is verified
+            boolean emailVerified = user.isEmailVerified();
 
-        // The user's ID, unique to the Firebase project. Do NOT use this value to
-        // authenticate with your backend server, if you have one. Use
-        // FirebaseUser.getToken() instead.
-        String uid = user.getUid();
+            // The user's ID, unique to the Firebase project. Do NOT use this value to
+            // authenticate with your backend server, if you have one. Use
+            // FirebaseUser.getToken() instead.
+            String uid = user.getUid();
 
-        Log.d(TAG, "InstanceID token: " + name + "and " + email);
-    }
+            Log.d(TAG, "InstanceID token: " + name + "and " + email);
+        }
 
-    String token = FirebaseInstanceId.getInstance().getToken();
+        String token = FirebaseInstanceId.getInstance().getToken();
         Log.d(TAG, "InstanceID token: " + token);
 
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-    setSupportActionBar(toolbar);
-    // Create the adapter that will return a fragment for each of the three
-    // primary sections of the activity.
-    mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-    // Set up the ViewPager with the sections adapter.
-    mViewPager = (ViewPager) findViewById(R.id.container);
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-    TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
+            @Override
+            public void onClick(View view) {
 
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
-            Intent ii = getIntent();
-            String userID = ii.getStringExtra("USERID");
-            Log.d("박정환", userID);
-            Intent i = new Intent(getApplicationContext(), WriteActivity.class);
-            i.putExtra("USERID",userID);
-            startActivity(i);
-        }
-    });
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                Intent ii = getIntent();
+                String userID = ii.getStringExtra("USERID");
+                Log.d("박정환", userID);
+                Intent i = new Intent(getApplicationContext(), WriteActivity.class);
+                i.putExtra("USERID",userID);
+                startActivity(i);
+            }
+        });
 
-}
+    }
 
 
     @Override
@@ -157,79 +158,79 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-/**
- * 간단한보기가 포함 된 자리 표시 자 조각입니다
- */
-public static class PlaceholderFragment extends Fragment {
-
     /**
-     * 이것의 섹션 번호를 나타내는 fragment
+     * 간단한보기가 포함 된 자리 표시 자 조각입니다
      */
-    private static final String ARG_SECTION_NUMBER = "section_number";
+    public static class PlaceholderFragment extends Fragment {
 
-    public PlaceholderFragment() {
-        Log.d("박정환","PlaceholderFragment클래스 생성자 생성 ");
-    }
+        /**
+         * 이것의 섹션 번호를 나타내는 fragment
+         */
+        private static final String ARG_SECTION_NUMBER = "section_number";
 
-    /**
-     * Returns a new instance of this fragment for the given section
-     * number.
-     */
-    public static PlaceholderFragment newInstance(int sectionNumber) {
-        PlaceholderFragment fragment = new PlaceholderFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-        textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-
-        return rootView;
-    }
-}
-
-/**
- * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
- * one of the sections/tabs/pages.
- */
-public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-    public SectionsPagerAdapter(FragmentManager fm) {
-        super(fm);
-    }
-
-    @Override
-    public Fragment getItem(int position) {
-        String asd = String.valueOf(position);
-        Log.d("박정환",asd);
-        // getItem is called to instantiate the fragment for the given page.
-        // Return a PlaceholderFragment (defined as a static inner class below).
-
-        if (position == 0) {
-            return new FirstFragment(position);
-        } else if (position == 1) {
-            return new SecondFragment(position);
-        } else {
-            return new ThirdFragment(position);
+        public PlaceholderFragment() {
+            Log.d("박정환","PlaceholderFragment클래스 생성자 생성 ");
         }
 
+        /**
+         * Returns a new instance of this fragment for the given section
+         * number.
+         */
+        public static PlaceholderFragment newInstance(int sectionNumber) {
+            PlaceholderFragment fragment = new PlaceholderFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+            return fragment;
+        }
 
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+
+            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+
+            return rootView;
+        }
     }
 
-    @Override
-    public int getCount() {
+    /**
+     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+     * one of the sections/tabs/pages.
+     */
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        // Show 3 total pages.
-        return 3;
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            String asd = String.valueOf(position);
+            Log.d("박정환",asd);
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a PlaceholderFragment (defined as a static inner class below).
+
+            if (position == 0) {
+                return new FirstFragment(position);
+            } else if (position == 1) {
+                return new SecondFragment(position);
+            } else {
+                return new ThirdFragment(position);
+            }
+
+
+        }
+
+        @Override
+        public int getCount() {
+
+            // Show 3 total pages.
+            return 3;
+        }
     }
-}
     @Override
     protected void onNewIntent(Intent intent) {
         Log.d("박정환","onNewIntent() called");

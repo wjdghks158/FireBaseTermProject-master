@@ -27,6 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,9 +42,6 @@ import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
-/**
- * A login screen that offers login via email/password.
- */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
 
@@ -74,6 +72,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private ImageView img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +96,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         };
 
         populateAutoComplete();
+
+        img  = (ImageView)findViewById(R.id.image);
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -409,4 +410,3 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 }
-
