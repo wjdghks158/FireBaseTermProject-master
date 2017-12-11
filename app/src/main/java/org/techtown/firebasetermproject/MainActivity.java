@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
     String TAG = "PH";
-
+    Log.d("박정환","박정환");
         super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     //actionBar.setDisplayShowTitleEnabled(false);
