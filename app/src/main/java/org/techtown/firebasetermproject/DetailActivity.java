@@ -171,14 +171,6 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
     public void onBackPressed() {
         super.onBackPressed();
 
-        //BusProvider.getInstance().post(new PushEvent(dayday, false, Color.argb(0, 255, 0, 0)));
-
-//        ThirdFragment t = getFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
-//            @Override
-//            public void onBackStackChanged() {
-//                reload
-//            }
-//        });
     }
 
     @Override
