@@ -20,12 +20,14 @@
 
             <TextView
                 android:text=""
+                android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
 
             <TextView
                 android:text="월"
+                android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
@@ -34,6 +36,7 @@
                 android:textStyle="bold"/>
             <TextView
                 android:text="화"
+                android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
@@ -42,6 +45,7 @@
                 android:textStyle="bold"/>
             <TextView
                 android:text="수"
+                android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
@@ -50,6 +54,7 @@
                 android:textStyle="bold"/>
             <TextView
                 android:text="목"
+                android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
@@ -58,6 +63,7 @@
                 android:textStyle="bold"/>
             <TextView
                 android:text="금"
+                android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
@@ -85,7 +91,8 @@
                 />
 
             <TextView
-                android:text="월"
+                android:text=""
+                android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -95,7 +102,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/monday1"/>
             <TextView
-                android:text="화"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -105,7 +112,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/tuesday1"/>
             <TextView
-                android:text="수"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -115,7 +122,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/wenday1"/>
             <TextView
-                android:text="목"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -125,7 +132,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/thursday1"/>
             <TextView
-                android:text="금"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -155,7 +162,7 @@
                 />
 
             <TextView
-                android:text="월"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -165,7 +172,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/monday2"/>
             <TextView
-                android:text="화"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -175,7 +182,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/tuesday2"/>
             <TextView
-                android:text="수"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -185,7 +192,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/wenday2"/>
             <TextView
-                android:text="목"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -195,7 +202,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/thursday2"/>
             <TextView
-                android:text="금"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -225,7 +232,7 @@
                 />
 
             <TextView
-                android:text="월"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -235,7 +242,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/monday3"/>
             <TextView
-                android:text="화"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -245,7 +252,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/tuesday3"/>
             <TextView
-                android:text="수"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -255,7 +262,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/wenday3"/>
             <TextView
-                android:text="목"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -265,7 +272,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/thursday3"/>
             <TextView
-                android:text="금"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -295,7 +302,7 @@
                 />
 
             <TextView
-                android:text="월"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -305,7 +312,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/monday4"/>
             <TextView
-                android:text="화"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -315,7 +322,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/tuesday4"/>
             <TextView
-                android:text="수"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -325,7 +332,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/wenday4"/>
             <TextView
-                android:text="목"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -335,7 +342,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/thursday4"/>
             <TextView
-                android:text="금"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -365,7 +372,7 @@
                 />
 
             <TextView
-                android:text="월"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -375,7 +382,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/monday5"/>
             <TextView
-                android:text="화"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -385,7 +392,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/tuesday5"/>
             <TextView
-                android:text="수"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -395,7 +402,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/wenday5"/>
             <TextView
-                android:text="목"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -405,7 +412,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/thursday5"/>
             <TextView
-                android:text="금"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -435,7 +442,7 @@
                 />
 
             <TextView
-                android:text="월"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -445,7 +452,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/monday6"/>
             <TextView
-                android:text="화"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -455,7 +462,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/tuesday6"/>
             <TextView
-                android:text="수"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -465,7 +472,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/wenday6"/>
             <TextView
-                android:text="목"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -475,7 +482,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/thursday6"/>
             <TextView
-                android:text="금"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -504,7 +511,7 @@
                 />
 
             <TextView
-                android:text="월"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -514,7 +521,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/monday7"/>
             <TextView
-                android:text="화"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -524,7 +531,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/tuesday7"/>
             <TextView
-                android:text="수"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -534,7 +541,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/wenday7"/>
             <TextView
-                android:text="목"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -544,7 +551,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/thursday7"/>
             <TextView
-                android:text="금"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -574,7 +581,7 @@
                 />
 
             <TextView
-                android:text="월"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -584,7 +591,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/monday8"/>
             <TextView
-                android:text="화"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -594,7 +601,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/tuesday8"/>
             <TextView
-                android:text="수"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -604,7 +611,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/wenday8"/>
             <TextView
-                android:text="목"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -614,7 +621,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/thursday8"/>
             <TextView
-                android:text="금"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -644,7 +651,7 @@
                 />
 
             <TextView
-                android:text="월"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -654,7 +661,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/monday9"/>
             <TextView
-                android:text="화"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -664,7 +671,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/tuesday9"/>
             <TextView
-                android:text="수"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -674,7 +681,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/wenday9"/>
             <TextView
-                android:text="목"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -684,7 +691,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/thursday9"/>
             <TextView
-                android:text="금"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -714,7 +721,7 @@
                 />
 
             <TextView
-                android:text="월"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -724,7 +731,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/monday10"/>
             <TextView
-                android:text="화"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -734,7 +741,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/tuesday10"/>
             <TextView
-                android:text="수"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -744,7 +751,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/wenday10"/>
             <TextView
-                android:text="목"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -754,7 +761,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/thursday10"/>
             <TextView
-                android:text="금"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -784,7 +791,7 @@
                 />
 
             <TextView
-                android:text="월"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -794,7 +801,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/monday11"/>
             <TextView
-                android:text="화"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -804,7 +811,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/tuesday11"/>
             <TextView
-                android:text="수"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -814,7 +821,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/wenday11"/>
             <TextView
-                android:text="목"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -824,7 +831,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/thursday11"/>
             <TextView
-                android:text="금"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -854,7 +861,7 @@
                 />
 
             <TextView
-                android:text="월"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -864,7 +871,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/monday12"/>
             <TextView
-                android:text="화"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -874,7 +881,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/tuesday12"/>
             <TextView
-                android:text="수"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -884,7 +891,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/wenday12"/>
             <TextView
-                android:text="목"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -894,7 +901,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/thursday12"/>
             <TextView
-                android:text="금"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -924,7 +931,7 @@
                 />
 
             <TextView
-                android:text="월"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -934,7 +941,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/monday13"/>
             <TextView
-                android:text="화"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -944,7 +951,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/tuesday13"/>
             <TextView
-                android:text="수"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -954,7 +961,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/wenday13"/>
             <TextView
-                android:text="목"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -964,7 +971,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/thursday13"/>
             <TextView
-                android:text="금"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -994,7 +1001,7 @@
                 />
 
             <TextView
-                android:text="월"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -1004,7 +1011,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/monday14"/>
             <TextView
-                android:text="화"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -1014,7 +1021,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/tuesday14"/>
             <TextView
-                android:text="수"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -1024,7 +1031,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/wenday14"/>
             <TextView
-                android:text="목"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -1034,7 +1041,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/thursday14"/>
             <TextView
-                android:text="금"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -1064,7 +1071,7 @@
                 />
 
             <TextView
-                android:text="월"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -1074,7 +1081,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/monday15"/>
             <TextView
-                android:text="화"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -1084,7 +1091,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/tuesday15"/>
             <TextView
-                android:text="수"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -1094,7 +1101,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/wenday15"/>
             <TextView
-                android:text="목"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"
@@ -1104,7 +1111,7 @@
                 android:background="@drawable/cell_shape"
                 android:id="@+id/thursday15"/>
             <TextView
-                android:text="금"
+                android:text="" android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_weight="3"

@@ -34,8 +34,8 @@ public class FirstFragment extends Fragment {
     private int mPage;
     private TextView name, subname;
     private ListView listView;
-    String[] name_str = {"유혁", "류혁", "김태양", "초파리", "피카츄", "라이츄", "파이리", "꼬부기", "버터플", "버터플", "버터플", "버터플", "버터플", "버터플"};
-    String[] subname_str = {"엉터리블로그", "운동", "안녕", "D-100", "백만볼트", "천만볼트", "불", "물", "나비", "버터플", "버터플", "버터플", "버터플", "버터플"};
+    String[] name_str = {"유혁", "류혁", "김태양", "초파리", "피카츄", "라이츄", "파이리", "꼬부기", "버터플","버터플","버터플","버터플","버터플","버터플"};
+    String[] subname_str = {"엉터리블로그", "운동", "안녕", "D-100", "백만볼트", "천만볼트", "불", "물", "나비","버터플","버터플","버터플","버터플","버터플"};
 
     public FirstFragment(int page) {
         Bundle args = new Bundle();
@@ -43,6 +43,7 @@ public class FirstFragment extends Fragment {
         //PageFragment fragment1 = new PageFragment(page ,name_Str, location_Str, state, PhoneNum);
         this.setArguments(args);
     }
+
 
 
     @Override
@@ -62,7 +63,6 @@ public class FirstFragment extends Fragment {
 
         return view;
     }
-
     public void createListView(View v) {
         listView = (ListView) v.findViewById(R.id.list_one);
 
@@ -99,8 +99,8 @@ public class FirstFragment extends Fragment {
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(getActivity(), NoticeActivity.class);
-                    startActivity(intent);
+                    Intent intent = new Intent( getActivity(), NoticeActivity.class);
+                    startActivity( intent);
                     //   Toast.makeText(getActivity(), items.get(allposition), Toast.LENGTH_SHORT).show();
                     //// TODO: 2017-01-02 여기서 데이터 받고 뿌려주자 그래야 익셉션이안뜸
                 }
@@ -108,7 +108,6 @@ public class FirstFragment extends Fragment {
             return convertView;
 
         }
-
         public class CustomViewHolder {
             public TextView modelName;
             public TextView m_name;
@@ -116,9 +115,9 @@ public class FirstFragment extends Fragment {
     }
 
     //클릭 리스너들
-    public void onClickChatting(View view) {
-        Intent intent = new Intent(getActivity(), NoticeActivity.class);
-        startActivity(intent);
+    public void onClickChatting( View view){
+        Intent intent = new Intent( getActivity(), NoticeActivity.class);
+        startActivity( intent);
     }
 
 }
