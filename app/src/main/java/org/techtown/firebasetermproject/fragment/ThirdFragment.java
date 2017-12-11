@@ -53,9 +53,6 @@ import org.techtown.firebasetermproject.calender.OnDayDecorator;
 import org.techtown.firebasetermproject.calender.SaturdayDecorator;
 import org.techtown.firebasetermproject.calender.SundayDecorator;
 
-import static android.graphics.Canvas.EdgeType.AA;
-import static com.android.volley.VolleyLog.TAG;
-
 @SuppressLint("ValidFragment")
 public class ThirdFragment extends Fragment {
     public static final String ARG_PAGE = "ARG_PAGE";
