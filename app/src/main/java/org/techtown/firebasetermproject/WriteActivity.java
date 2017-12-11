@@ -119,6 +119,8 @@ public class WriteActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
 items = new String[10];
+
+
         if(user == null) {
             finish();
             return ;
@@ -126,6 +128,7 @@ items = new String[10];
         Log.d("박정환", "write8");
         database2 = FirebaseDatabase.getInstance();
         database2.getReference().child("class").addListenerForSingleValueEvent(new ValueEventListener() {
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d("박정환", "write9");
