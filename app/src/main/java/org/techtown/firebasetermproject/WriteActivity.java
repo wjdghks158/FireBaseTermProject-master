@@ -3,6 +3,7 @@ package org.techtown.firebasetermproject;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -15,13 +16,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,20 +27,28 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.gson.Gson;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.techtown.firebasetermproject.dto.ClassDTO;
+import org.techtown.firebasetermproject.dto.NotiDTO;
 import org.techtown.firebasetermproject.dto.PostDTO;
 import org.techtown.firebasetermproject.dto.TaskDTO;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class WriteActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -70,7 +75,6 @@ public class WriteActivity extends AppCompatActivity {
     String day;
 
     String regId;
-    RequestQueue queue;
 
     private List<ClassDTO> classDTOS = new ArrayList<>();
     private ArrayList<String> subject_class_List = new ArrayList<>();
@@ -81,7 +85,6 @@ public class WriteActivity extends AppCompatActivity {
     String[] items;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("박정환", "write");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write);
 
@@ -100,22 +103,14 @@ public class WriteActivity extends AppCompatActivity {
 
         tv = (TextView)findViewById(R.id.textView1);
         date_tv = (TextView)findViewById(R.id.date_tv);
-
         date_tv.setText(year + "년" + month + "월" + day +"일");
-        Log.d("박정환", "write2");
-
-        Log.d("박정환", "write4");
-        Log.d("asd","asd");
         Intent ii = getIntent();
-        Log.d("박정환", "write5");
         userID = ii.getStringExtra("USERID");
-        Log.d("박정환", "write6");
-        Log.d("박정환", userID);
+
         btn_push = (Button) findViewById(R.id.push);
         btn_write = (Button) findViewById(R.id.write_button);
         subj = (TextView)findViewById(R.id.title);
         // Write a message to the database
-        Log.d("박정환", "write7");
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
 items = new String[10];
@@ -123,12 +118,10 @@ items = new String[10];
             finish();
             return ;
         }
-        Log.d("박정환", "write8");
         database2 = FirebaseDatabase.getInstance();
         database2.getReference().child("class").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("박정환", "write9");
                 classDTOS.clear();
                 int i =0;
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
@@ -169,19 +162,6 @@ items = new String[10];
         });
 
 
-       // String key = myRef.push().getKey();
-                /*
-                HashMap<String, Object> postValues =  new HashMap<>();
-                postValues.put("userID", userID);
-                postValues.put("class", subject_class);
-                postValues.put("title", title);
-                postValues.put("body", body);
-                postValues.put("deadline", time);
-                */
-
-
-
-
 
         btn_push.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -199,14 +179,20 @@ items = new String[10];
                 postValues.put("body", body);
                 postValues.put("deadline", time);
 
-                myRef.child(key).setValue(postValues);
+                myRef.child(key).setValue(postValues).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Log.d("박정환","onComplete시작");
+                        sendData();
+                        Log.d("박정환","onComplete끝남");
+                    }
+                });
 
                // send(subject_class);
 
             }
         });
 
-        queue = Volley.newRequestQueue(getApplicationContext());
         getRegistrationId();
 
         btn_write.setOnClickListener(new View.OnClickListener() {
@@ -218,14 +204,7 @@ items = new String[10];
                 database = FirebaseDatabase.getInstance();
                 myRef = database.getReference("post");
                 String key = myRef.push().getKey();
-                /*
-                HashMap<String, Object> postValues =  new HashMap<>();
-                postValues.put("userID", userID);
-                postValues.put("class", subject_class);
-                postValues.put("title", title);
-                postValues.put("body", body);
-                postValues.put("deadline", time);
-                */
+
                 PostDTO postDTO = new PostDTO();
                 postDTO.userID = userID;
                 postDTO.uID = regId;
@@ -250,9 +229,6 @@ date_tv.setOnClickListener(new View.OnClickListener() {
     }
 });
         Log.d("박정환", "write10");
-
-
-
     }
 
 
@@ -270,91 +246,43 @@ date_tv.setOnClickListener(new View.OnClickListener() {
         Log.d("박정환",regId);
     }
 
-    public void send(String input) {
-        JSONObject requestData = new JSONObject();
 
-        try{
-            requestData.put("priority","high");
-            JSONObject dataObj = new JSONObject();
-            dataObj.put("contents", input);
-            requestData.put("data",dataObj);
 
-            JSONArray idArray = new JSONArray();
-            idArray.put(0,regId);
-            requestData.put("reistration_ids",idArray);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
-        sendData(requestData, new SendResponseListener() {
+
+    public void sendData() {
+
+        Gson gson = new Gson();
+
+        NotiDTO notiDTO = new NotiDTO();
+        notiDTO.to = "9tU7213llvTlaeKSBXYlVSTgO7h2";
+        notiDTO.notification.text = "asd";
+        notiDTO.notification.title = "aaaaa";
+        notiDTO.data.text = "asd";
+        notiDTO.data.title = "aaaaa";
+
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf8"),gson.toJson(notiDTO));
+
+        Request request = new Request.Builder()
+                .header("Content-Type","application/json")
+                .addHeader("Authorization","key=AIzaSyDhiqIpUW6x8ARYTucsDoLgGVJoZILpFhc")
+                .url("http://gcm-http.googleapis.com/gcm/send")
+                .post(requestBody)
+                .build();
+        OkHttpClient okHttpClient = new OkHttpClient();
+        okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
-            public void onRequestCompleted() {
+            public void onFailure(Call call, IOException e) {
+                Log.d("박정환","onFailure");
 
             }
 
             @Override
-            public void onRequestStarted() {
-
-            }
-
-            @Override
-            public void onRequestWithError(VolleyError error) {
-
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.d("박정환","onResponse");
             }
         });
 
-    }
-
-
-    public interface SendResponseListener {
-        public void onRequestStarted();
-        public void onRequestCompleted();
-        public void onRequestWithError(VolleyError error);
-    }
-
-
-    public void sendData(JSONObject requestData, final SendResponseListener listener) {
-        JsonObjectRequest request = new JsonObjectRequest(
-                Request.Method.POST,
-                "https://fcm.googleapis.com/fcm/send",
-                requestData,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        listener.onRequestCompleted();
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                listener.onRequestWithError(error);
-            }
-        }
-        ) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> params = new HashMap<String,String>();
-
-                return params;
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> headers = new HashMap<String,String>();
-                headers.put("Authorization","key=AAAA_mr_EYY:APA91bGoPS2vaNX8XHx9MgThI7-dy0w-uGy1yaSZCaxsrX2re_WYhwtvILMqzkmPrhBX92aopkn6h-3Q8H-AtVxiLYGdmm5vsIkvE81kWDJJzjVCbnNfdmn-LTJGc2uV1Ocs32dYmcpi");
-
-
-                return headers;
-            }
-
-            @Override
-            public String getBodyContentType() {
-                return "application/json";
-            }
-        };
-
-        request.setShouldCache(false);
-        listener.onRequestStarted();
-        queue.add(request);
     }
 
 }
