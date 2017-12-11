@@ -102,19 +102,11 @@ public class ThirdFragment extends Fragment {
         mPage = getArguments().getInt(ARG_PAGE);
 
         BusProvider.getInstance().register(this);
-        //
-        // saveDay = new ArrayList<>();
-
-//        FragmentTransaction ft = getFragmentManager().beginTransaction();
-//        ft.detach(this).attach(this).commit();
-
 
 
     }
 
 
-    // Inflate the fragment layout we defined above for this fragment
-    // Set the associated text for the title
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -130,7 +122,7 @@ public class ThirdFragment extends Fragment {
 
 
         calendar = (MaterialCalendarView)view.findViewById(R.id.calendarView);
-        setCalender = (Button)view.findViewById(R.id.load_calendar);
+
         listCalendar = (TextView)view.findViewById(R.id.calendarList);
 
 
@@ -196,17 +188,6 @@ public class ThirdFragment extends Fragment {
 
 
 
-
-
-        setCalender.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-
-            }
-        });
-
         calendar.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
@@ -239,12 +220,6 @@ public class ThirdFragment extends Fragment {
                         detail.putExtra("date", date.toString());
                         startActivity(detail);
 
-//                        DetailFragment df = new DetailFragment();
-//
-//                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//                        transaction.add(R.id.detail_view, df);
-//                        transaction.addToBackStack(null);
-//                        transaction.commit();
                     }
                     dayday = date;
                 }

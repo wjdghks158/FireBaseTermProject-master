@@ -32,15 +32,10 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
     TextView detail;
     TextView Hourview;
     TextView Minview;
-    TimePicker tt;
     TimePickerDialog ttt;
     Button btn_plus;
     Button btn_minus;
     String tag;
-    CalendarDay dday;
-    RadioButton red;
-    RadioButton blue;
-    RadioButton yellow;
     RadioGroup Gcolor;
     Calendar currentTime;
     int Hours;
@@ -58,11 +53,13 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
 
         currentTime = Calendar.getInstance();
 
+
         title = (TextView)findViewById(R.id.title_date);
         detail = (TextView)findViewById(R.id.detail_info);
 
-        tt = (TimePicker)findViewById(R.id.select_time);
-        ttt = new TimePickerDialog(getApplicationContext(), this, currentTime.get(Calendar.HOUR), currentTime.get(Calendar.MINUTE), false);
+
+        ttt = new TimePickerDialog(this, 2, this, currentTime.get(Calendar.HOUR), currentTime.get(Calendar.MINUTE), false);
+
         Gcolor = (RadioGroup)findViewById(R.id.select_color);
 
 
@@ -72,6 +69,7 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
         btn_plus = (Button)findViewById(R.id.btn_plus);
         btn_minus = (Button)findViewById(R.id.btn_minus);
 
+
         btn_plus.setEnabled(false);
 
 
@@ -79,6 +77,9 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
 
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                btn_plus.setEnabled(true);
+
                 if(checkedId == R.id.radio1){
                     color = Color.BLUE;
                 }
@@ -88,10 +89,14 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
                 else if(checkedId == R.id.radio3){
                     color = Color.RED;
                 }
-                else
+                else if(checkedId == R.id.radio4){
                     color = Color.GREEN;
+                    ttt.show();
+                }
+                else{
+                    btn_plus.setEnabled(false);
+                }
 
-                btn_plus.setEnabled(true);
             }
         });
 
@@ -104,14 +109,14 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
                 CalendarDay dayPlus = dayday;
 
                 btn_plus.setText(dayPlus.toString());
-                Log.d("PH", dayPlus.toString());
+
                 BusProvider.getInstance().post(new PushEvent(dayPlus, true, color));
 
-
-                ttt.show();
+                currentTime = Calendar.getInstance();
 
                 getHourMin();
 
+                onBackPressed();
             }
         });
 
@@ -127,10 +132,8 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
                 BusProvider.getInstance().post(new PushEvent(dayPlus, false, color));
 
 
-
             }
         });
-
 
     }
 
@@ -139,32 +142,33 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
         SimpleDateFormat formatter
                 = new SimpleDateFormat("yyyyMMdd-HH-mm-ss-SSS", Locale.KOREA);
 
-
-        tt.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
-            @Override
-            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-                Hours = hourOfDay;
-                Min = minute;
-            }
-
-        });
-
         if(color == Color.RED){
+            Hours = currentTime.get(Calendar.HOUR_OF_DAY);
+            Min = currentTime.get(Calendar.MINUTE);
             Min += 1;
         }
         else if(color == Color.YELLOW){
+            Hours = currentTime.get(Calendar.HOUR_OF_DAY);
+            Min = currentTime.get(Calendar.MINUTE);
             Min += 3;
         }
         else if(color == Color.BLUE){
+            Hours = currentTime.get(Calendar.HOUR_OF_DAY);
+            Min = currentTime.get(Calendar.MINUTE);
             Min += 5;
         }
+        else{
+
+        }
+
 
         String sHours = Integer.toString(Hours);
         String sMin = Integer.toString(Min);
         Hourview.setText(sHours);
         Minview.setText(sMin);
 
-        new AlarmHATT(getApplicationContext()).Alarm(Hours, Min);
+        if(!(currentTime.getTimeInMillis() <= Calendar.getInstance().getTimeInMillis()))
+            new AlarmHATT(getApplicationContext()).Alarm(Hours, Min);
     }
 
     @Override
@@ -175,6 +179,16 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+        btn_plus.setEnabled(true);
+
+        Hours = hourOfDay;
+        Min = minute;
+
+        String sHours = Integer.toString(Hours);
+        String sMin = Integer.toString(Min);
+        Hourview.setText(sHours);
+        Minview.setText(sMin);
 
     }
 }
