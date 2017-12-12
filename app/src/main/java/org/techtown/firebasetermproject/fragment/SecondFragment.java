@@ -1,5 +1,4 @@
 package org.techtown.firebasetermproject.fragment;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
@@ -28,7 +27,7 @@ import java.util.List;
 public class SecondFragment extends Fragment {
     public static final String ARG_PAGE = "ARG_PAGE";
     private int mPage;
-    String userID;
+    //String userID = "b@b.com";
     FirebaseDatabase database;
     private List<TaskDTO> taskDTOS = new ArrayList<>();
     private List<ClassDTO> classDTOS = new ArrayList<>();
@@ -38,7 +37,7 @@ public class SecondFragment extends Fragment {
     private TextView wenday[] = new TextView[16];
     private TextView thursday[] = new TextView[16];
     private TextView friday[] = new TextView[16];
-//wenday5
+    //wenday5
     @Override
     public void onActivityCreated(Bundle b) {
         //15
@@ -78,7 +77,9 @@ public class SecondFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPage = getArguments().getInt(ARG_PAGE);
-       Log.d("박정환","두번째 프레그먼트 oncreate");
+
+
+        Log.d("박정환","두번째 프레그먼트 oncreate");
         //Log.d("박정환",  MainActivity.userID);
         database = FirebaseDatabase.getInstance();
         database.getReference().child("task").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -108,7 +109,7 @@ public class SecondFragment extends Fragment {
                     Log.d("박정환", "class1");
                     classDTO = snapshot.getValue(ClassDTO.class);
                     classDTOS.add(classDTO);
-                    Log.d("박정환",MainActivity.userID);
+//                    Log.d("박정환",MainActivity.userID);
                 }
                 for( int i=0; i<taskDTOS.size(); i++) {
                     Log.d("박정환", "class2");
@@ -116,14 +117,14 @@ public class SecondFragment extends Fragment {
                         Log.d("박정환", "class3");
                         for(int j=0; j<classDTOS.size(); j++){
                             Log.d("박정환", "class4");
-                           if(taskDTOS.get(i).subject_class.equals(classDTOS.get(j).subject_class)) {
-                               settingDay(classDTOS.get(j));
-                               Log.d("박정환", "class5");
-                               Log.d("박정환",classDTOS.get(j).day);
-                            //   sett
+                            if(taskDTOS.get(i).subject_class.equals(classDTOS.get(j).subject_class)) {
+                                settingDay(classDTOS.get(j));
+                                Log.d("박정환", "class5");
+                                Log.d("박정환",classDTOS.get(j).day);
+                                //   sett
                             }
                         }
-                }
+                    }
                 }
             }
 
@@ -226,7 +227,7 @@ public class SecondFragment extends Fragment {
         friday[13] = (TextView) view.findViewById(R.id.friday14);
         friday[14] = (TextView) view.findViewById(R.id.friday15);
 
-Log.d("박정환","여기까지 가나?");
+        Log.d("박정환","여기까지 가나?");
 
         //classDTOS.get(0).
         Log.d("박정환","여기까지 가나2?");
@@ -239,47 +240,47 @@ Log.d("박정환","여기까지 가나?");
                 Log.d("박정환", "asd"+monday[i].toString());
                 monday[i].setBackgroundColor(context.getResources().getColor(R.color.colorPink));
             }
-             if(!tuesday[i].getText().toString().equals("")) {
+            if(!tuesday[i].getText().toString().equals("")) {
                 tuesday[i].setBackgroundColor(context.getResources().getColor(R.color.colorPink));
             }
-             if(!wenday[i].getText().toString().equals("")) {
+            if(!wenday[i].getText().toString().equals("")) {
                 wenday[i].setBackgroundColor(context.getResources().getColor(R.color.colorPink));
             }
-             if(!thursday[i].getText().toString().equals("")) {
+            if(!thursday[i].getText().toString().equals("")) {
                 thursday[i].setBackgroundColor(context.getResources().getColor(R.color.colorPink));
             }
-             if(!friday[i].getText().toString().equals("")) {
-               friday[i].setBackgroundColor(context.getResources().getColor(R.color.colorPink));
+            if(!friday[i].getText().toString().equals("")) {
+                friday[i].setBackgroundColor(context.getResources().getColor(R.color.colorPink));
             }
         }
     }
 
     public void settingDay(ClassDTO classDTO) {
-       if(classDTO.day.equals("monday")) {
-           for( int i=classDTO.period; i< classDTO.period+classDTO.class_Time; i++) {
-              monday[i].setText("수업");
-               monday[i].setBackgroundColor(getContext().getResources().getColor(R.color.colorPink));
-           }
-       }
-       else if (classDTO.day.equals("tuesday")){
-           for( int i=classDTO.period; i< classDTO.period+classDTO.class_Time; i++) {
-               tuesday[i].setText("수업");
-           }
-       }
-       else if (classDTO.day.equals("wenday")){
-           for( int i=classDTO.period; i< classDTO.period+classDTO.class_Time; i++) {
-               wenday[i].setText("수업");
-           }
-       }
-       else if ( classDTO.day.equals("thursday")){
-           for( int i=classDTO.period; i< classDTO.period+classDTO.class_Time; i++) {
-               thursday[i].setText("수업");
-           }
-       }else if ( classDTO.day.equals("friday")){
-           for( int i=classDTO.period; i< classDTO.period+classDTO.class_Time; i++) {
-               friday[i].setText("수업");
-           }
-       }
+        if(classDTO.day.equals("monday")) {
+            for( int i=classDTO.period; i< classDTO.period+classDTO.class_Time; i++) {
+                monday[i].setText("수업");
+                monday[i].setBackgroundColor(getContext().getResources().getColor(R.color.colorPink));
+            }
+        }
+        else if (classDTO.day.equals("tuesday")){
+            for( int i=classDTO.period; i< classDTO.period+classDTO.class_Time; i++) {
+                tuesday[i].setText("수업");
+            }
+        }
+        else if (classDTO.day.equals("wenday")){
+            for( int i=classDTO.period; i< classDTO.period+classDTO.class_Time; i++) {
+                wenday[i].setText("수업");
+            }
+        }
+        else if ( classDTO.day.equals("thursday")){
+            for( int i=classDTO.period; i< classDTO.period+classDTO.class_Time; i++) {
+                thursday[i].setText("수업");
+            }
+        }else if ( classDTO.day.equals("friday")){
+            for( int i=classDTO.period; i< classDTO.period+classDTO.class_Time; i++) {
+                friday[i].setText("수업");
+            }
+        }
     }
 
 

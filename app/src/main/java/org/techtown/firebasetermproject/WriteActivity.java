@@ -1,5 +1,4 @@
 package org.techtown.firebasetermproject;
-
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,7 +31,7 @@ import com.google.gson.Gson;
 import org.techtown.firebasetermproject.dto.ClassDTO;
 import org.techtown.firebasetermproject.dto.NotiDTO;
 import org.techtown.firebasetermproject.dto.PostDTO;
-import org.techtown.firebasetermproject.dto.TaskDTO;
+
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -40,7 +39,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -49,7 +48,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
 public class WriteActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -88,16 +86,16 @@ public class WriteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write);
 
-         time = System.currentTimeMillis();
+        time = System.currentTimeMillis();
 
-         yyyy = new SimpleDateFormat("yyyy");
-         mm = new SimpleDateFormat("MM");
-         dd = new SimpleDateFormat("dd");
+        yyyy = new SimpleDateFormat("yyyy");
+        mm = new SimpleDateFormat("MM");
+        dd = new SimpleDateFormat("dd");
 
 
-         year = yyyy.format(new Date(time));
-         month = mm.format(new Date(time));
-         day = dd.format(new Date(time));
+        year = yyyy.format(new Date(time));
+        month = mm.format(new Date(time));
+        day = dd.format(new Date(time));
 
 
 
@@ -113,7 +111,7 @@ public class WriteActivity extends AppCompatActivity {
         // Write a message to the database
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
-items = new String[10];
+        items = new String[10];
         if(user == null) {
             finish();
             return ;
@@ -124,6 +122,7 @@ items = new String[10];
             public void onDataChange(DataSnapshot dataSnapshot) {
                 classDTOS.clear();
                 int i =0;
+
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     ClassDTO classDTO = snapshot.getValue(ClassDTO.class);
                     classDTOS.add(classDTO);
@@ -132,6 +131,7 @@ items = new String[10];
                     subject_class_List.add(classDTO.subject_class);
                     i++;
                 }
+
             }
 
             @Override
@@ -182,14 +182,15 @@ items = new String[10];
                 myRef.child(key).setValue(postValues).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        Log.d("박정환","onComplete시작");
+
                         sendData();
-                        Log.d("박정환","onComplete끝남");
+
                     }
                 });
 
-               // send(subject_class);
-
+                // send(subject_class);
+                Intent i = new Intent(getApplicationContext(), NoticeActivity.class);
+                startActivity(i);
             }
         });
 
@@ -219,16 +220,16 @@ items = new String[10];
 
             }
         });
-         dialog = new DatePickerDialog(this, listener, Integer.valueOf(year).intValue(), Integer.valueOf(month).intValue()-1
+        dialog = new DatePickerDialog(this, listener, Integer.valueOf(year).intValue(), Integer.valueOf(month).intValue()-1
                 , Integer.valueOf(day).intValue());
-date_tv.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
+        date_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-        dialog.show();
-    }
-});
-        Log.d("박정환", "write10");
+                dialog.show();
+            }
+        });
+
     }
 
 

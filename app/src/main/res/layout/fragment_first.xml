@@ -5,15 +5,10 @@
     android:background="#f0f0f0f0"
     tools:context="org.techtown.firebasetermproject.fragment.FirstFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <ListView
+        android:id="@+id/list_one"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:overScrollMode="never"
-        android:background="@android:color/background_light">
-
-    </android.support.v7.widget.RecyclerView>
-
+        android:layout_height="match_parent" />
 
 
 </LinearLayout>
