@@ -185,6 +185,8 @@ public class ThirdFragment extends Fragment {
                 }
             }
         }
+        int a = cursor.getCount();
+        final String b = Integer.toString(a);
 
 
 
@@ -209,7 +211,7 @@ public class ThirdFragment extends Fragment {
 
                         Intent detail = new Intent(context, DetailActivity.class);
 
-                        detail.putExtra("date", specialDay.toString());
+                        detail.putExtra("date", b);
                         startActivity(detail);
 
 
@@ -217,7 +219,7 @@ public class ThirdFragment extends Fragment {
                     }
                     else if(firstDate.toString().equals(date.toString())){
                         Intent detail = new Intent(context, DetailActivity.class);
-                        detail.putExtra("date", date.toString());
+                        detail.putExtra("date", b);
                         startActivity(detail);
 
                     }
@@ -298,6 +300,13 @@ public class ThirdFragment extends Fragment {
 
         super.onActivityCreated(savedInstanceState);
 
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+
+        BusProvider.getInstance().unregister(this);
     }
 
 

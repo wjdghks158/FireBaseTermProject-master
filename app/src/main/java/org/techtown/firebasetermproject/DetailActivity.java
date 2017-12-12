@@ -3,6 +3,7 @@ package org.techtown.firebasetermproject;
 import android.app.FragmentManager;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.TimePicker;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import org.techtown.firebasetermproject.calender.EventDecorator;
+import org.techtown.firebasetermproject.calender.MyDBCalendar;
 import org.techtown.firebasetermproject.fragment.ThirdFragment;
 
 import java.text.DateFormat;
@@ -38,10 +40,12 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
     String tag;
     RadioGroup Gcolor;
     Calendar currentTime;
+    CalendarDay dayPlus;
+    String ccnt;
     int Hours;
     int Min;
     int color;
-
+    int cnt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +53,7 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
         setContentView(R.layout.activity_detail);
         Intent i = getIntent();
 
-        tag = i.getStringExtra("date");
+        ccnt = i.getStringExtra("date");
 
         currentTime = Calendar.getInstance();
 
@@ -65,7 +69,14 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
 
         Hourview = (TextView)findViewById(R.id.hour);
         Minview = (TextView)findViewById(R.id.min);
-        title.setText(dayday.toString());
+
+        String a = dayday.toString();
+        a = a.replaceAll("[^0-9]", "");
+        String b = a.substring(0, 4);
+        String c = a.substring(4, 6);
+        String d = a.substring(6);
+
+        title.setText(b + "년 " + c + "월 " + d + "일을 선택하셨습니다!");
         btn_plus = (Button)findViewById(R.id.btn_plus);
         btn_minus = (Button)findViewById(R.id.btn_minus);
 
@@ -73,12 +84,15 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
         btn_plus.setEnabled(false);
 
 
+        cnt = Integer.parseInt(ccnt);
+
         Gcolor.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 
                 btn_plus.setEnabled(true);
+                currentTime = Calendar.getInstance();
 
                 if(checkedId == R.id.radio1){
                     color = Color.BLUE;
@@ -106,13 +120,10 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
             @Override
             public void onClick(View v) {
 
-                CalendarDay dayPlus = dayday;
+                dayPlus = dayday;
 
                 btn_plus.setText(dayPlus.toString());
 
-                BusProvider.getInstance().post(new PushEvent(dayPlus, true, color));
-
-                currentTime = Calendar.getInstance();
 
                 getHourMin();
 
@@ -125,13 +136,14 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
             public void onClick(View v) {
 
 
-                CalendarDay dayPlus = dayday;
+                dayPlus = dayday;
 
                 btn_minus.setText(dayPlus.toString());
 
                 BusProvider.getInstance().post(new PushEvent(dayPlus, false, color));
 
 
+                onBackPressed();
             }
         });
 
@@ -139,8 +151,6 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
 
 
     public void getHourMin() {
-        SimpleDateFormat formatter
-                = new SimpleDateFormat("yyyyMMdd-HH-mm-ss-SSS", Locale.KOREA);
 
         if(color == Color.RED){
             Hours = currentTime.get(Calendar.HOUR_OF_DAY);
@@ -167,8 +177,16 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
         Hourview.setText(sHours);
         Minview.setText(sMin);
 
-        if(!(currentTime.getTimeInMillis() <= Calendar.getInstance().getTimeInMillis()))
-            new AlarmHATT(getApplicationContext()).Alarm(Hours, Min);
+
+
+
+        //1,3,5일을 1분 3분 5분으로 축약
+        if(Min > Calendar.getInstance().get(Calendar.MINUTE)){
+            BusProvider.getInstance().post(new PushEvent(dayPlus, true, color));
+            Log.d("PH", "jj" + Min + "nn" + Calendar.getInstance().get(Calendar.MINUTE));
+            new AlarmHATT(getApplicationContext()).Alarm(Hours, Min, cnt);
+        }
+
     }
 
     @Override
